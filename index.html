@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İFŞA SİTESİ</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase v9+ SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove, set } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js";
+        
+        // ⚠️ BURAYI KENDİ FIREBASE CONFIG'İNLE DEĞİŞTİR ⚠️
+        const firebaseConfig = {
+            apiKey: "AIzaSyC_gh3bWH-rnU5ID-eGNw2N5_Wy0rJ7bOo",
+            authDomain: "ifsa-5c0db.firebaseapp.com",
+            databaseURL: "https://ifsa-5c0db-default-rtdb.firebaseio.com",
+            projectId: "ifsa-5c0db",
+            storageBucket: "ifsa-5c0db.firebasestorage.app",
+            messagingSenderId: "461480971168",
+            appId: "1:461480971168:web:d2654243b118eeff0632c5",
+            measurementId: "G-R69M3D4YN7"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        
+        // Make available globally
+        window.firebaseTools = { database, ref, push, onValue, remove, set };
+        console.log("Firebase başlatıldı!");
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-section">
+                <h1 class="welcome-text">Hoşgeldin! <span class="site-title">İFŞA SİTESİ</span></h1>
+                <div class="signature">
+                    <span class="p6yzn">@p6yzn</span>
+                    <span class="schizo">ŞİZOFREN</span>
+                </div>
+            </div>
+            
+            <!-- Giriş/Çıkış Butonları -->
+            <div class="auth-section">
+                <button id="loginBtn" class="btn login-btn">Admin Giriş</button>
+                <button id="logoutBtn" class="btn logout-btn" style="display: none;">Çıkış Yap</button>
+            </div>
+        </header>
+
+        <!-- Admin Giriş Modalı -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Admin Girişi</h2>
+                <div class="form-group">
+                    <label for="username">Kullanıcı Adı:</label>
+                    <input type="text" id="username" placeholder="Admin">
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifre:</label>
+                    <input type="password" id="password" placeholder="32685">
+                </div>
+                <button id="submitLogin" class="btn submit-btn">Giriş Yap</button>
+                <p id="loginError" class="error-message"></p>
+            </div>
+        </div>
+
+        <!-- Gönderi Ekleme Formu (Sadece giriş yapanlar için) -->
+        <div id="postForm" class="post-form" style="display: none;">
+            <h2>Yeni Gönderi Ekle</h2>
+            <div class="form-group">
+                <label for="postName">İsim:</label>
+                <input type="text" id="postName" placeholder="Gönderi ismini girin">
+            </div>
+            <div class="form-group">
+                <label for="postDesc">Açıklama:</label>
+                <textarea id="postDesc" placeholder="Gönderi açıklamasını girin" rows="4"></textarea>
+            </div>
+            <button id="addPostBtn" class="btn add-btn">Gönderi Ekle</button>
+        </div>
+
+        <!-- Gönderiler Listesi -->
+        <main>
+            <h2>Gönderiler</h2>
+            <div id="postsContainer" class="posts-container">
+                <!-- Gönderiler buraya yüklenecek -->
+            </div>
+        </main>
+
+        <!-- Admin Panel (Sadece Admin için) -->
+        <div id="adminPanel" class="admin-panel" style="display: none;">
+            <h2>Admin Paneli</h2>
+            <div class="admin-actions">
+                <button id="deleteAllBtn" class="btn danger-btn">Tüm Gönderileri Sil</button>
+                <p class="admin-note">Not: Sadece Admin tüm gönderileri silebilir ve gönderi ekleyebilir.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
